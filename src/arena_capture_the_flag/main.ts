@@ -30,7 +30,7 @@
 // This stuff is arena-specific
 import { ATTACK, HEAL, RANGED_ATTACK } from "game/constants";
 import { BodyPart, Flag } from "arena";
-import { Creep, GameObject } from "game/prototypes";
+import { Creep, GameObject, StructureTower } from "game/prototypes";
 import { getDirection, getObjectsByPrototype, getRange, getTicks } from "game/utils";
 import { searchPath } from "game/path-finder";
 import { Visual } from "game/visual";
@@ -50,6 +50,7 @@ declare module "game/prototypes" {
 let myCreeps: Creep[];
 let enemyCreeps: Creep[];
 let enemyFlag: Flag | undefined;
+let myTowers: StructureTower[];
 
 // This is the only exported function from the main module. It is called every tick.
 export function loop(): void {
@@ -57,6 +58,7 @@ export function loop(): void {
   // getObjectsByPrototype function is the alternative to Room.find from Screeps World.
   // There is no Game.creeps or Game.structures, you can manage game objects in your own way.
   myCreeps = getObjectsByPrototype(Creep).filter(i => i.my);
+  myTowers = getObjectsByPrototype(StructureTower).filter(i => i.my);
   enemyCreeps = getObjectsByPrototype(Creep).filter(i => !i.my);
   enemyFlag = getObjectsByPrototype(Flag).find(i => !i.my);
 
